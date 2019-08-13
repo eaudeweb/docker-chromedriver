@@ -1,0 +1,24 @@
+version: '2.0'
+
+services:
+  chromedriver:
+    build:
+      context: .
+    container_name: chromedriver
+    restart: unless-stopped
+    user: root
+    privileged: true
+    ports:
+      - "127.0.0.1:9515:9515"
+    environment:
+      - CHROMEDRIVER_WHITELISTED_IPS=''
+    extra_hosts:
+      - "who.test:172.20.0.1"
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.20.0.0/16
+        gateway: 172.20.0.1
